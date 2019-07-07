@@ -1,0 +1,17 @@
+name: Waypoint
+version: 1.3.2-spigot1-14-2
+main: de.jescochrist.waypoint.main.Initiate
+
+commands:
+    cwp:
+        description: Sets the compass location to the specified waypoint
+    lswp:
+        description: Lists all set waypoints
+    mvwp:
+        description: Changes the name of a waypoint
+    rmwp:
+        description: Removes a set waypoint
+    setwp:
+        description: Sets or overwrites a waypoint
+    wp:
+        description: Shows the waypoint details
