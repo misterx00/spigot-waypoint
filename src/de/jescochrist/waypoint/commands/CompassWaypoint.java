@@ -83,9 +83,7 @@ public class CompassWaypoint implements CommandExecutor {
 				}
 				
 				// If any of the needed configuration values is a null value
-				else Write.writeToPlayer(p, messagePrefix + "§cThe waypoint §6" + args[0] + " §cdoes not exist.");
-				
-			}*/
+				else Write.writeToPlayer(p, messagePrefix + "§cThe waypoint §6" + args[0] + " §cdoes not exist.");*/
 				
 				// Define new waypoint object from player object and waypoint name
 				WaypointObj wp = new WaypointObj(p, args[0]);
