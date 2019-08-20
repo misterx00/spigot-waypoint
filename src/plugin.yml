@@ -1,5 +1,5 @@
 name: Waypoint
-version: 2.0.0beta4-spigot1-14-3
+version: 2.0.0beta5-spigot1-14-3
 main: de.jescochrist.waypoint.main.Initiate
 
 commands:
