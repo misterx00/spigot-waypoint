@@ -2,8 +2,7 @@ package de.jescochrist.waypoint.commands;
 
 // Import packages
 import de.jescochrist.generalplugin.misc.*;
-import de.jescochrist.waypoint.main.Initiate;
-import java.util.UUID;
+import de.jescochrist.waypoint.support.WaypointObj;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -42,27 +41,25 @@ public class CompassWaypoint implements CommandExecutor {
 			if (args.length == 1) {
 				
 				// If none of the needed configuration values is a null value
-				if (
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "X") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Y") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Z") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Yaw") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Pitch") != null
+				/*if (
+					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".WorldUID") != null &&
+					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".X") != null &&
+					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Y") != null &&
+					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Z") != null
 				) {
 					
 					// Check if player is in the correct world
-					if (UUID.fromString((String) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID")).equals(p.getLocation().getWorld().getUID())) {
+					if (UUID.fromString((String) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".WorldUID")).equals(p.getLocation().getWorld().getUID())) {
 					
 						// If world type is NORMAL
-						if (Bukkit.getWorld(UUID.fromString((String) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID"))).getEnvironment() == Environment.NORMAL) {
+						if (Bukkit.getWorld(UUID.fromString((String) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".WorldUID"))).getEnvironment() == Environment.NORMAL) {
 							
 							// Set players compass location to the waypoint coordinates
 							p.setCompassTarget(new Location(
-								Bukkit.getWorld(UUID.fromString((String) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID"))),
-								((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "X")).intValue(),
-								((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Y")).intValue(),
-								((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Z")).intValue()
+								Bukkit.getWorld(UUID.fromString((String) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".WorldUID"))),
+								((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".X")).intValue(),
+								((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Y")).intValue(),
+								((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Z")).intValue()
 							));
 							
 							// Set waypoint as active in the configuration
@@ -86,6 +83,43 @@ public class CompassWaypoint implements CommandExecutor {
 				}
 				
 				// If any of the needed configuration values is a null value
+				else Write.writeToPlayer(p, messagePrefix + "§cThe waypoint §6" + args[0] + " §cdoes not exist.");
+				
+			}*/
+				
+				// Define new waypoint object from player object and waypoint name
+				WaypointObj wp = new WaypointObj(p, args[0]);
+				
+				// Load the waypoint from the configuration file; If loading the waypoint was successful
+				if (wp.loadFromConfig(cfg)) {
+					
+					// Check if player is in the correct world
+					if (wp.getWorldUID().equals(p.getLocation().getWorld().getUID())) {
+						
+						// If world type is NORMAL
+						if (Bukkit.getWorld(wp.getWorldUID()).getEnvironment() == Environment.NORMAL) {
+							
+							// Set players compass location to the waypoint coordinates
+							p.setCompassTarget(new Location(
+								Bukkit.getWorld(wp.getWorldUID()),
+								((Double) wp.getX()).intValue(),
+								((Double) wp.getY()).intValue(),
+								((Double) wp.getZ()).intValue()
+							));
+							
+						}
+						
+						// If world type is not NORMAL
+						else Write.writeToPlayer(p, messagePrefix + "§cYou can not set your compass location to worlds with an type other than overworld.");
+						
+					}
+					
+					// If player is not located in the correct world
+					else Write.writeToPlayer(p, messagePrefix + "§cYou can not set your compass location to a world you are not located in.");
+					
+				}
+				
+				// If loading the waypoint was not successful
 				else Write.writeToPlayer(p, messagePrefix + "§cThe waypoint §6" + args[0] + " §cdoes not exist.");
 				
 			}

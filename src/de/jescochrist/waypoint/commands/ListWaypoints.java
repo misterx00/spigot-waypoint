@@ -68,7 +68,7 @@ public class ListWaypoints implements CommandExecutor {
 			}
 			
 			// Else send short message to inform player about the usage
-			else Write.writeToPlayer(p, messagePrefix + "Usage: /setwp <waypoint name>");
+			else Write.writeToPlayer(p, messagePrefix + "Usage: /lswp");
 			
 		}
 		

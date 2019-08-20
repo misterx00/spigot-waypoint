@@ -2,8 +2,7 @@ package de.jescochrist.waypoint.commands;
 
 // Import packages
 import de.jescochrist.generalplugin.misc.*;
-import de.jescochrist.waypoint.main.Initiate;
-
+import de.jescochrist.waypoint.support.WaypointObj;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,32 +38,26 @@ public class MoveWaypoint implements CommandExecutor {
 			if (args.length == 2) {
 				
 				// If none of the needed source configuration values is a null value
-				if (
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "X") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Y") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Z") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Yaw") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Pitch") != null
+				/*if (
+					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".WorldUID") != null &&
+					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".X") != null &&
+					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Y") != null &&
+					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Z") != null
 				) {
 					
 					// If all needed destination configuration values are null values
 					if (
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "WorldUID") == null &&
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "X") == null &&
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "Y") == null &&
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "Z") == null &&
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "Yaw") == null &&
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "Pitch") == null
+						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + ".WorldUID") == null &&
+						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + ".X") == null &&
+						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + ".Y") == null &&
+						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + ".Z") == null
 					) {
 						
 						// Copy data from source waypoint to destination waypoint
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "WorldUID", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID"));
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "X", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "X"));
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "Y", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Y"));
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "Z", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Z"));
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "Yaw", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Yaw"));
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + "." + "Pitch", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Pitch"));
+						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + ".WorldUID", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".WorldUID"));
+						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + ".X", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".X"));
+						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + ".Y", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Y"));
+						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + ".Z", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Z"));
 						
 						// Set source waypoint data to null
 						cfg.set("Waypoints." + p.getUniqueId() + "." + args[0], null);
@@ -73,7 +66,7 @@ public class MoveWaypoint implements CommandExecutor {
 						Initiate.getInstance().saveConfig();
 						
 						// Write information to player
-						Write.writeToPlayer(p, messagePrefix + "§aThe waypoint §6" + args[0] + " §awas successfully moved to §6" + args[1] + " §a.");
+						Write.writeToPlayer(p, messagePrefix + "§aThe waypoint §6" + args[0] + " §awas successfully moved to §6" + args[1] + "§a.");
 						
 					}
 					
@@ -83,6 +76,39 @@ public class MoveWaypoint implements CommandExecutor {
 				}
 				
 				// If any of the needed source configuration values is a null value
+				else Write.writeToPlayer(p, messagePrefix + "§cThe source waypoint §6" + args[0] + " §cdoes not exist.");*/
+				
+				// Define new source waypoint object from player object and waypoint name
+				WaypointObj srcwp = new WaypointObj(p, args[0]);
+				
+				// Load the source waypoint from the configuration file; If loading the source waypoint was successful
+				if (srcwp.loadFromConfig(cfg)) {
+					
+					// Define new destination waypoint object from player object, waypoint name and variables from source waypoint object
+					WaypointObj dstwp = new WaypointObj(p, args[1], srcwp.getWorldUID(), srcwp.getX(), srcwp.getY(), srcwp.getZ());
+					
+					// Save destination waypoint to config and catch result; If setting the destination waypoint was successful
+					if (dstwp.writeToConfig(cfg)) {
+						
+						// Remove the source waypoint from the configuration file; If removing the source waypoint was successful
+						if (srcwp.removeFromConfig(cfg)) {
+							
+							// Write information to player
+							Write.writeToPlayer(p, messagePrefix + "§aThe waypoint §6" + args[0] + " §awas successfully moved to §6" + args[1] + "§a.");
+							
+						}
+						
+						// If removing the source waypoint was not successful
+						Write.writeToPlayer(p, messagePrefix + "§cThe destination waypoint §6" + args[1] + " §cwas created, but the source waypoint §6" + args[0] + " §ccould not be deleted.");
+						
+					}
+					
+					// If setting the destination waypoint was not successful
+					else Write.writeToPlayer(p, messagePrefix + "§cThe destination waypoint §6" + args[1] + " §calready exists.");
+					
+				}
+				
+				// If loading the source waypoint was not successful
 				else Write.writeToPlayer(p, messagePrefix + "§cThe source waypoint §6" + args[0] + " §cdoes not exist.");
 				
 			}

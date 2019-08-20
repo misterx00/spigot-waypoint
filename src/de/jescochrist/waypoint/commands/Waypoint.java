@@ -2,7 +2,7 @@ package de.jescochrist.waypoint.commands;
 
 // Import packages
 import de.jescochrist.generalplugin.misc.*;
-import java.util.UUID;
+import de.jescochrist.waypoint.support.WaypointObj;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,27 +38,23 @@ public class Waypoint implements CommandExecutor {
 			// If one argument was passed to the command
 			if (args.length == 1) {
 				
-				// If none of the needed configuration values is a null value
-				if (
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "X") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Y") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Z") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Yaw") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Pitch") != null
-				) {
+				// Define new waypoint object from player object and waypoint name
+				WaypointObj wp = new WaypointObj(p, args[0]);
+				
+				// Load the waypoint from the configuration file; If loading the waypoint was successful
+				if (wp.loadFromConfig(cfg)) {
 					
 					// Write world name and coordinates to player
 					Write.writeToPlayer(p, messagePrefix + "Coordinates for waypoint §6" + args[0] + " §f- " +
-						"World: " + Bukkit.getWorld(UUID.fromString((String) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID"))).getName() + ", " +
-						"X: " + ((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "X")).intValue() + ", " +
-						"Y: " + ((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Y")).intValue() + ", " +
-						"Z: " + ((Double) cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Z")).intValue()
+						"World: " + Bukkit.getWorld(wp.getWorldUID()).getName() + ", " +
+						"X: " + ((Double) wp.getX()).intValue() + ", " +
+						"Y: " + ((Double) wp.getY()).intValue() + ", " +
+						"Z: " + ((Double) wp.getZ()).intValue()
 					);
 					
 				}
 				
-				// If any of the needed configuration values is a null value
+				// If loading the waypoint was not successful
 				else Write.writeToPlayer(p, messagePrefix + "§cThe waypoint §6" + args[0] + " §cdoes not exist.");
 				
 			}

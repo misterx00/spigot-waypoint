@@ -2,8 +2,7 @@ package de.jescochrist.waypoint.commands;
 
 // Import packages
 import de.jescochrist.generalplugin.misc.*;
-import de.jescochrist.waypoint.main.Initiate;
-
+import de.jescochrist.waypoint.support.WaypointObj;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,28 +37,18 @@ public class RemoveWaypoint implements CommandExecutor {
 			// If one argument was passed to the command
 			if (args.length == 1) {
 				
-				// If none of the needed configuration values is a null value
-				if (
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "WorldUID") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "X") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Y") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Z") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Yaw") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + "." + "Pitch") != null
-				) {
-					
-					// Set waypoint data to null
-					cfg.set("Waypoints." + p.getUniqueId() + "." + args[0], null);
-					
-					// Save configuration file
-					Initiate.getInstance().saveConfig();
+				// Define new waypoint object from player object and waypoint name
+				WaypointObj wp = new WaypointObj(p, args[0]);
+				
+				// Remove the waypoint from the configuration file; If removing the waypoint was successful
+				if (wp.removeFromConfig(cfg)) {
 					
 					// Write information to player
 					Write.writeToPlayer(p, messagePrefix + "§aThe waypoint §6" + args[0] + " §awas deleted successfully.");
 					
 				}
 				
-				// If any of the needed configuration values is a null value
+				// If removing the waypoint was not successful
 				else Write.writeToPlayer(p, messagePrefix + "§cThe waypoint §6" + args[0] + " §cdoes not exist.");
 				
 			}
