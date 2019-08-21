@@ -40,19 +40,19 @@ public class ListWaypoints implements CommandExecutor {
 				// Get the configuration section
 				ConfigurationSection cfgSection = cfg.getConfigurationSection("Waypoints." + p.getUniqueId());
 				
-				// Define string keys
-				String keys = "";
-				
-				// Run over all keys in the configuration section
-				for (String key : cfgSection.getKeys(false)) {
+				// If cfgSection is empty, it will yield a NullPointerException
+				try {
 					
-					// Append keys string by the current key
-					keys += "§6" + key + "§f, ";
+					// Define string keys
+					String keys = "";
 					
-				}
-				
-				// If the keys string is not empty anymore
-				if (!(keys.equals(""))) {
+					// Run over all keys in the configuration section
+					for (String key : cfgSection.getKeys(false)) {
+						
+						// Append keys string by the current key
+						keys += "§6" + key + "§f, ";
+						
+					}
 					
 					// Remove the last two chars at the end of the string
 					keys = keys.substring(0, keys.length() - 2);
@@ -62,8 +62,8 @@ public class ListWaypoints implements CommandExecutor {
 					
 				}
 				
-				// If the keys string is still empty
-				else Write.writeToPlayer(p, "§cYou have no set waypoints.");
+				// Catch NullPointerException
+				catch (NullPointerException e) { Write.writeToPlayer(p, messagePrefix + "§cYou have no set waypoints."); }
 				
 			}
 			

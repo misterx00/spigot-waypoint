@@ -37,47 +37,6 @@ public class MoveWaypoint implements CommandExecutor {
 			// If one argument was passed to the command
 			if (args.length == 2) {
 				
-				// If none of the needed source configuration values is a null value
-				/*if (
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".WorldUID") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".X") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Y") != null &&
-					cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Z") != null
-				) {
-					
-					// If all needed destination configuration values are null values
-					if (
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + ".WorldUID") == null &&
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + ".X") == null &&
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + ".Y") == null &&
-						cfg.get("Waypoints." + p.getUniqueId() + "." + args[1] + ".Z") == null
-					) {
-						
-						// Copy data from source waypoint to destination waypoint
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + ".WorldUID", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".WorldUID"));
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + ".X", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".X"));
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + ".Y", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Y"));
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[1] + ".Z", cfg.get("Waypoints." + p.getUniqueId() + "." + args[0] + ".Z"));
-						
-						// Set source waypoint data to null
-						cfg.set("Waypoints." + p.getUniqueId() + "." + args[0], null);
-						
-						// Save configuration file
-						Initiate.getInstance().saveConfig();
-						
-						// Write information to player
-						Write.writeToPlayer(p, messagePrefix + "§aThe waypoint §6" + args[0] + " §awas successfully moved to §6" + args[1] + "§a.");
-						
-					}
-					
-					// If any of the needed destination configuration values is not a null value
-					else Write.writeToPlayer(p, messagePrefix + "§cThe destination waypoint §6" + args[1] + " §calready exists.");
-					
-				}
-				
-				// If any of the needed source configuration values is a null value
-				else Write.writeToPlayer(p, messagePrefix + "§cThe source waypoint §6" + args[0] + " §cdoes not exist.");*/
-				
 				// Define new source waypoint object from player object and waypoint name
 				WaypointObj srcwp = new WaypointObj(p, args[0]);
 				
@@ -114,7 +73,7 @@ public class MoveWaypoint implements CommandExecutor {
 			}
 			
 			// Else send short message to inform player about the usage
-			else Write.writeToPlayer(p, messagePrefix + "Usage: /mvwp <waypoint name>");
+			else Write.writeToPlayer(p, messagePrefix + "Usage: /mvwp <source waypoint name> <destination waypoint name>");
 			
 		}
 		
