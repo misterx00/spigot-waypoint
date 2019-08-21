@@ -1,12 +1,10 @@
 package de.jescochrist.waypoint.schedulers;
 
 // Import packages
+import de.jescochrist.waypoint.support.WaypointObj;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-
-import de.jescochrist.waypoint.support.WaypointObj;
-
 import org.bukkit.Location;
 
 // Define class CompassWaypointScheduler

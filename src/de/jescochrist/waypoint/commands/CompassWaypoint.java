@@ -1,8 +1,8 @@
 package de.jescochrist.waypoint.commands;
 
 // Import packages
-import de.jescochrist.waypoint.main.Initiate;
 import de.jescochrist.generalplugin.misc.*;
+import de.jescochrist.waypoint.main.Initiate;
 import de.jescochrist.waypoint.support.WaypointObj;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
