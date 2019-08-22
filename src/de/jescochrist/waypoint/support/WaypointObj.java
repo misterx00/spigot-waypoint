@@ -1,12 +1,12 @@
 package de.jescochrist.waypoint.support;
 
-//Import packages
+// Import packages
 import de.jescochrist.waypoint.main.Initiate;
 import java.util.UUID;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-//Define class WaypointObj
+// Define class WaypointObj
 public class WaypointObj {
 	
 	// Define class variables
