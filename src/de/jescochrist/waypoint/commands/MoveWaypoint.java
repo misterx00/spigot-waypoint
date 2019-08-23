@@ -58,7 +58,7 @@ public class MoveWaypoint implements CommandExecutor {
 						}
 						
 						// If removing the source waypoint was not successful
-						Write.writeToPlayer(p, messagePrefix + "§cThe destination waypoint §6" + args[1] + " §cwas created, but the source waypoint §6" + args[0] + " §ccould not be deleted.");
+						else Write.writeToPlayer(p, messagePrefix + "§cThe destination waypoint §6" + args[1] + " §cwas created, but the source waypoint §6" + args[0] + " §ccould not be deleted.");
 						
 					}
 					
