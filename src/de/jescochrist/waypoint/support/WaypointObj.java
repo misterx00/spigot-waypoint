@@ -39,7 +39,7 @@ public class WaypointObj {
 		
 	}
 	
-	// Define method getWorldUUID
+	// Define method getWorldUID
 	public UUID getWorldUID() {
 		return this.worldUID;
 	}
@@ -124,7 +124,7 @@ public class WaypointObj {
 		
 	}
 	
-	// Define method writeConfig
+	// Define method writeToConfig
 	public boolean writeToConfig(FileConfiguration cfg) {
 		
 		// If all needed configuration values are null values
