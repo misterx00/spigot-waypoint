@@ -1,5 +1,8 @@
 name: Waypoint
-version: 2.0.0-spigot1-16-4
+version: 2.0.1-spigot1-16-4
+api-version: 1.16
+authors: ['gitlab-jcitp-de_jesco', 'github_misterx00']
+website: 'https://gitlab.jcitp.de/explore'
 main: de.jescochrist.waypoint.main.Initiate
 
 commands:

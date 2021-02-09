@@ -54,11 +54,19 @@ public class ListWaypoints implements CommandExecutor {
 						
 					}
 					
-					// Remove the last two chars at the end of the string
-					keys = keys.substring(0, keys.length() - 2);
+					// If keys string is not empty
+					if (keys != "") {
+						
+						// Remove the last two chars at the end of the string
+						keys = keys.substring(0, keys.length() - 2);
+						
+						// Write information to player
+						Write.writeToPlayer(p, messagePrefix + "Your set waypoints: " + keys);
+						
+					}
 					
-					// Write information to player
-					Write.writeToPlayer(p, messagePrefix + "Your set waypoints: " + keys);
+					// If the keys string is empty the player has no set waypoints
+					else { Write.writeToPlayer(p, messagePrefix + "§cYou have no set waypoints."); }
 					
 				}
 				
